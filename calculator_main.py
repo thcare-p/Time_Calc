@@ -3,14 +3,11 @@
 #Дни надо будет закинуть в dict{}
 def time_split(start_s, prefix=False):
     if not prefix:
-        # _list = list(start_s)
-        # print(_list)
         hours = start_s[0]
         minutes = start_s[2] + start_s[3]
         return hours, minutes
     else:
         start_split = start_s.split()#мы делим начальную строку на лист по пробелу, а потом по :
-        print(start_split)
         start_prefix = start_split[1]
         if start_prefix == "AM":
             digit_prefix = 1
@@ -26,16 +23,48 @@ def time_split(start_s, prefix=False):
 #функция для проверки присваемого значения AM/PM   
 def reset_time(hours):
     pass
-#функция для смены дня в последствии сочетания 
-def change_day(n, n1, prefix):
-    #как-то надо обдумать какую-никакую рекурсию
-    pass
+  
+#функция для сложения минут
+def calculate_minutes(s_min, d_min):
+    res = int(s_min) + int(d_min)
+    if res >= 60:
+        new_min = res % 60 
+        new_hours = res // 60
+        return new_hours, new_min
+    return res
+
+def calculate_hours(s_hours, d_hours, n_hours = 0):
+    res = int(s_hours) + int(d_hours) + int(n_hours)
+    if res > 12:
+        f_hours = res % 12
+        pref_d = res // 12
+        return f_hours, pref_d
+    return res
 
 #основная функция
 def add_time(start, duration):
+    
     start_hours, start_minutes, start_prefix = time_split(start, True)
     duration_hours, duration_minutes = time_split(duration)
-    return start_hours, start_minutes, start_prefix,  duration_hours, duration_minutes
+    
+    check_list = [(calculate_minutes(start_minutes, duration_minutes))]
+    
+    if len(check_list) > 1:
+        add_hours = check_list[0]
+        final_minutes = check_list[1]
+    else:
+        final_minutes = check_list[0]
+    
+    check_list1 = [(calculate_hours(start_hours, duration_hours))]
+    
+    if len(check_list1) > 1:
+        final_hours = check_list1[0]
+        add_prefix_digit = check_list1[1]
+    else:
+        final_hours = check_list[0]
+        
+    return final_hours, final_minutes
+
 
 start_input = "3:00 PM"
 duration_input = "3:00"

@@ -46,8 +46,9 @@ def add_time(start, duration):
     
     start_hours, start_minutes, start_prefix = time_split(start, True)
     duration_hours, duration_minutes = time_split(duration)
-    
+    print(start_minutes, duration_minutes)
     check_list = [(calculate_minutes(start_minutes, duration_minutes))]
+    print(check_list)
     
     if len(check_list) > 1:
         add_hours = check_list[0]
@@ -56,18 +57,18 @@ def add_time(start, duration):
         final_minutes = check_list[0]
     
     check_list1 = [(calculate_hours(start_hours, duration_hours))]
-    
+    print(check_list1)
     if len(check_list1) > 1:
         final_hours = check_list1[0]
         add_prefix_digit = check_list1[1]
     else:
-        final_hours = check_list[0]
+        final_hours = check_list1[0]
         
     return final_hours, final_minutes
 
 
-start_input = "3:00 PM"
-duration_input = "3:00"
+start_input = "3:10 PM"
+duration_input = "3:30"
 
 # start_input = input("Add start time: ")
 # duration_input = input("Write amount of hours: ")

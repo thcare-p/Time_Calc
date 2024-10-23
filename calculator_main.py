@@ -26,7 +26,7 @@ def time_split(start_s, prefix=False):
             digit_prefix = 1
         else:
             digit_prefix = 2
-
+        print(digit_prefix)
         return hours, minutes, digit_prefix
 
 def output(hours, minutes, prefix, days_later):
@@ -51,14 +51,17 @@ def calculate_minutes(s_min, d_min):
     return new_hours, str(res)
 
 def calculate_hours(s_hours, d_hours, dd_pref, n_hours=0):
-    # print(s_hours, d_hours, n_hours)
+
     res = int(s_hours) + int(d_hours) + n_hours
     if res > 12:
+        print("Gotcha", dd_pref)
         pref_d = 0
-        f_hours = res % 12
-        pref_d += res // 12
-        pref_d = pref_d + dd_pref
-        pref_d = pref_d // 2
+        if res % 12 == 0:
+            f_hours = 12
+        else:
+            f_hours = res % 12
+        print(res)
+        pref_d += res // 24
 
         if pref_d % 2 ==0:
             f_pref = "PM"
@@ -75,27 +78,28 @@ def calculate_hours(s_hours, d_hours, dd_pref, n_hours=0):
 
 #основная функция
 def add_time(start, duration):
-    
+    count_dpr = 0
     start_hours, start_minutes, start_prefix = time_split(start, True)
     print(start_hours, start_minutes, start_prefix)
     duration_hours, duration_minutes = time_split(duration)
     print(duration_hours, duration_minutes)
     check_list = [(calculate_minutes(start_minutes, duration_minutes))]
-    # print(check_list, "первый - доп. часы, второй - минуты")
     add_hours = check_list[0][0]
     final_minutes = check_list[0][1]
-    
+    print(check_list)
     check_list1 = [(calculate_hours(start_hours, duration_hours, start_prefix, add_hours))]
-    print(check_list1, "первый - перфикс, второй часы")
+    # print(check_list1, "первый - перфикс, второй часы")
     add_prefix_digit = check_list1[0][0]
-    final_hours = check_list1[0][1] #сколько раз делилось на 12
-    count_dpr = check_list1[0][2]
+    final_hours = check_list1[0][1]
+    print(len(check_list))
+    if len(check_list1[0]) > 2:
+        count_dpr = check_list1[0][2]
     
-    new_time = output(final_hours, final_minutes, add_prefix_digit, count_dpr)
+    new_time = output(final_hours, final_minutes, add_prefix_digit, count_dpr) #часы, минуты, префикс(AM/PM), количество дней 
     
     return new_time
 
-start_input = "11:55 AM"
-duration_input = "24:00"
+start_input = "11:59 AM"
+duration_input = "24:05"
 
 print(add_time(start_input, duration_input))

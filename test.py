@@ -1,28 +1,44 @@
-def calculate_hours(s_hours, d_hours, dd_pref, n_hours=0):
+# def calculate_hours(s_hours, d_hours, start_from_prefix, n_hours=0):
 
-    res = int(s_hours) + int(d_hours) + n_hours
-    if res > 12:
-        print("Gotcha", dd_pref)
-        pref_d = 0
-        f_hours = res % 12
-        print(res)
-        pref_d += res // 24
+#     res = int(s_hours) + int(d_hours) + n_hours
+#     if res > 12:
+#         print("Gotcha", start_from_prefix)
+#         if res % 12 == 0:
+#             final_hours = 12
+#         else:
+#             final_hours = res % 12
+#         final_days = (res) // 12
 
-        if pref_d % 2 ==0:
-            f_pref = "PM"
-        else:
-            f_pref = "AM"
-        return f_pref, str(f_hours), pref_d
+#         if final_days % 2 == 0:
+#             final_prefix = "PM"
+#         else:
+#             final_prefix = "AM"
+#         if final_days > 2:
+#             final_days = (start_from_prefix + final_days) // 2
+        
+#         return final_prefix, str(final_hours), final_days
     
-    if dd_pref % 2== 0:
-        pref_d = "PM"
-    else:
-        pref_d = "AM"
+#     if start_from_prefix % 2== 0:
+#         final_days = "PM"
+#     else:
+#         final_days = "AM"
 
-    return pref_d, str(res)
+#     return final_days, str(res)
 
-start_input = "1:55 AM"
-duration_input = "4:00"
+# start_input = "1:55 AM"
+# duration_input = "4:00"
 
-print(calculate_hours(2, 48, 1, 0))
-# print(calculate_hours(duration_input))
+# print(calculate_hours(11, 3, 1, 1), "финальный префикс, часы, кол-вод ней")
+# # print(calculate_hours(duration_input))
+
+days = {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wendsday": "Wendsday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+    }
+
+print(days["monday"])

@@ -30,7 +30,8 @@
 
 # print(calculate_hours(11, 3, 1, 1), "финальный префикс, часы, кол-вод ней")
 # # print(calculate_hours(duration_input))
-
+days_later = 1
+exact_day = "saTurday"
 days = {
         "monday": "Monday",
         "tuesday": "Tuesday",
@@ -40,5 +41,20 @@ days = {
         "saturday": "Saturday",
         "sunday": "Sunday"
     }
-
-print(days["monday"])
+digit_day = {
+    1:'Monday',
+    2:'Tuesday',
+    3: 'Wendsday',
+    4:'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
+    0: 'Sunday'
+}
+day = days[exact_day.lower()]
+count = 0
+for i in range(len(digit_day)):
+    if day == digit_day[i]:
+        exact_day = i
+res = (exact_day + days_later) % 7
+print(digit_day[res])
+print(res)

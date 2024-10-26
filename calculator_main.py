@@ -38,12 +38,13 @@ def calculate_minutes(s_min, d_min):
         if new_min < 10:
             new_min = "0" + str(new_min)
         return new_hours, str(new_min)
+    if res == 0:
+        res = "0" + str(res)
     return new_hours, str(res)
 
 def calculate_hours(s_hours, d_hours, start_from_prefix, n_hours=0):
 
     res = int(s_hours) + int(d_hours) + n_hours
-    print(res)
     
     if res >= 12:
         if res % 12 == 0:
@@ -70,33 +71,36 @@ def calculate_hours(s_hours, d_hours, start_from_prefix, n_hours=0):
 
     return final_days, str(res)
 
-def count_days(amount_days_after, days_passed):
+def count_days(exact_day, amount_days_after):
     days = {
         "monday": "Monday",
         "tuesday": "Tuesday",
-        "wendsday": "Wendsday",
+        "wednesday": "Wednesday",
         "thursday": "Thursday",
         "friday": "Friday",
         "saturday": "Saturday",
         "sunday": "Sunday"
     }
-    digit_days = {
-        1:"monday",
-        2:"tuesday",
-        3:"wendsday",
-        4:"thursday",
-        5:"friday",
-        6:"saturday",
-        7:"sunday"
+    digit_day = {
+        1:'Monday',
+        2:'Tuesday',
+        3: 'Wednesday',
+        4:'Thursday',
+        5: 'Friday',
+        6: 'Saturday',
+        0: 'Sunday'
     }
-    
-    
-    
+    day = days[exact_day.lower()]
+    for i in range(len(digit_day)):
+        if day == digit_day[i]:
+            exact_day = i
+    res = (exact_day + amount_days_after) % 7
+    return digit_day[res]
     
 def output(hours, minutes, prefix, days_later, add_day=''):
     res = hours + ":" + minutes 
     res += " "+"".join(prefix)
-    if not add_day:
+    if add_day:
         res += ", " + count_days(add_day, days_later)
     if days_later == 1:
         res += " " + "".join("(next day)")
@@ -105,7 +109,7 @@ def output(hours, minutes, prefix, days_later, add_day=''):
     return res
 
 #основная функция
-def add_time(start, duration, day):
+def add_time(start, duration, day=""):
     count_dpr = 0
     start_hours, start_minutes, start_prefix = time_split(start, True)
     duration_hours, duration_minutes = time_split(duration)
@@ -119,11 +123,20 @@ def add_time(start, duration, day):
     if len(check_list1[0]) > 2:
         count_dpr = check_list1[0][2]
     
-    new_time = output(final_hours, final_minutes, start_from_prefixix_digit, count_dpr) #часы, минуты, префикс(AM/PM), количество дней 
+    new_time = output(final_hours, final_minutes, start_from_prefixix_digit, count_dpr, day) #часы, минуты, префикс(AM/PM), количество дней 
     
     return new_time
 
-start_input = "11:12 PM" 
-duration_input = "0:00"
+def main():
+    start_input = input("Enter start time: ")
+    duration_input = input("Enter duration time: ")
+    answer = input("Would like to count days?(yes/no): ")
+    if answer == "yes":
+        day_input = input()
+        print(add_time(start_input, duration_input, day_input))
+        return
+    else:
+        print(add_time(start_input, duration_input))
+        return
 
-print(add_time(start_input, duration_input, "mOnDay"))
+main()
